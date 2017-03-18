@@ -1,14 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Xml.Serialization;
 
 using Microsoft.Bot.Builder.Azure;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using System.Net;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 // For more information about this template visit http://aka.ms/azurebots-csharp-luis
 [Serializable]
@@ -47,7 +46,7 @@ public class BasicLuisDialog : LuisDialog<object>
         }
         var info = new WeatherInfo();
         var weather = info.GetWeatherInfo("Amsterdam");
-        await context.PostAsync($"{weather.request.ToString()}");
+        await context.PostAsync($"{weather.request.ToString}");
         await context.PostAsync($"End");
          //
         context.Wait(MessageReceived);
@@ -55,8 +54,8 @@ public class BasicLuisDialog : LuisDialog<object>
 }
 public class Weather
 {
-    public Request request;
-    public Current_condition current_condition;
+    public List<Request> request;
+    public List<Current_condition> current_condition;
 
 }
 public class Request
@@ -69,15 +68,17 @@ public class Current_condition
     public int temp_C;
     public int temp_F;
 }
+public class WeatherResponse
+{
+    public Weather data;
+}
 public class WeatherInfo
 {
-    public Weather GetWeatherInfo(string city)
+    public WeatherResponse GetWeatherInfo(string city)
     {
         WebClient client = new WebClient();
-        string response = client.DownloadString($"http://api.worldweatheronline.com/premium/v1/weather.ashx?q={city}&key=cce343f9e6bd4d159bc133122171803");
-        XmlSerializer serializer = new XmlSerializer(typeof(Weather), new XmlRootAttribute("data"));
-        MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(response));
-        var weatherInfo = (Weather)serializer.Deserialize(memStream);
+        string response = client.DownloadString($"http://api.worldweatheronline.com/premium/v1/weather.ashx?q={city}&key=cce343f9e6bd4d159bc133122171803&format=json");
+        var weatherInfo = JsonConvert.DeserializeObject<WeatherResponse>(response);
         return weatherInfo;
     }
 }
