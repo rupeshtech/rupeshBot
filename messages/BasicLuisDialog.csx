@@ -37,17 +37,16 @@ public class BasicLuisDialog : LuisDialog<object>
     {
         var entities = result.Entities;
         int j = 0;
-        await context.PostAsync($"Y asked about weather.{result.Query}");
+        string city = null;
+        await context.PostAsync($"You asked.{result.Query}");
         foreach(var entity in entities)
         {
-            var city = entity.Entity;
-         await context.PostAsync($"entity number is {j} .. value is {city}"); 
-         j++;   
+            city = entity.Entity;
         }
         var info = new WeatherInfo();
         var weather = info.GetWeatherInfo("Amsterdam");
-        await context.PostAsync($"{weather}");
-        await context.PostAsync($"End");
+        await context.PostAsync($"Weather infor for {weather.data.request.FindLast().query}. \r\n Temperatur is : {weather.data.current_condition.FindLast().temp_C}. \r\n Feels like :{weather.data.current_condition.FindLast().FeelsLikeC}");
+        //await context.PostAsync($"End");
          //
         context.Wait(MessageReceived);
     }
@@ -67,6 +66,17 @@ public class Current_condition
 {
     public int temp_C;
     public int temp_F;
+    public int windspeedMiles;
+    public int windspeedKmph;
+    public int winddirDegree;
+    public int winddir16Point;
+    public int precipMM;
+    public int humidity;
+    public int visibility;
+    public int pressure;
+    public int cloudcover;
+    public int FeelsLikeC;
+    public int FeelsLikeF;
 }
 public class WeatherResponse
 {
@@ -74,11 +84,11 @@ public class WeatherResponse
 }
 public class WeatherInfo
 {
-    public string GetWeatherInfo(string city)
+    public WeatherResponse GetWeatherInfo(string city)
     {
         WebClient client = new WebClient();
         string response = client.DownloadString($"http://api.worldweatheronline.com/premium/v1/weather.ashx?q={city}&key=cce343f9e6bd4d159bc133122171803&format=json");
         var weatherInfo = JsonConvert.DeserializeObject<WeatherResponse>(response);
-        return JsonConvert.SerializeObject(weatherInfo); ;
+        return weatherInfo; 
     }
 }
