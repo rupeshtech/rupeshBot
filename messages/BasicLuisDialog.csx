@@ -93,6 +93,10 @@ public class BasicLuisDialog : LuisDialog<object>
                 await context.PostAsync($"Thanks");
             } 
         }
+        else
+        {
+            await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
+        }
 
         //await context.PostAsync($"End");
         //
