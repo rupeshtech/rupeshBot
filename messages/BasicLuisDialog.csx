@@ -165,10 +165,10 @@ public class WeatherInfo
 }
 public class  Mortgage
 {
-    public int MaxMortgageAmount;
+    public decimal MaxMortgageAmount;
     public decimal MaxNewHouse;
-    public int MaxExistingHouse;
-    public int MaxSpendingAmount;
+    public decimal MaxExistingHouse;
+    public decimal MaxSpendingAmount;
     public bool HasErrorMessage;
     public decimal Interest;
 }
