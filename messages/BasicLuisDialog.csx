@@ -51,7 +51,7 @@ public class BasicLuisDialog : LuisDialog<object>
         var weather = info.GetWeatherInfo(city);
         if (weather.data.error != null)
         {
-            await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check the city name.");
+            await context.PostAsync($"Unbale for find answer you question: {result.Query}.");
 
         }
         else
