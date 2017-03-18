@@ -69,8 +69,7 @@ public class Current_condition
     public int windspeedMiles;
     public int windspeedKmph;
     public int winddirDegree;
-    public int winddir16Point;
-    public int precipMM;
+    public string winddir16Point;
     public int humidity;
     public int visibility;
     public int pressure;
