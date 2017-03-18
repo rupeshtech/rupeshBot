@@ -44,9 +44,17 @@ public class BasicLuisDialog : LuisDialog<object>
             city = entity.Entity;
         }
         var info = new WeatherInfo();
-        var weather = info.GetWeatherInfo("Amsterdam");
-        await context.PostAsync($"Weather infor for {weather.data.request.FindLast(x=>true).query}. \r\n Temperatur is : {weather.data.current_condition.FindLast(p=>true).temp_C}. \r\n Feels like :{weather.data.current_condition.FindLast(l=>true).FeelsLikeC}");
-        //await context.PostAsync($"End");
+        var weather = info.GetWeatherInfo(city);
+        if (weather.data.error != null)
+        {
+            await context.PostAsync($"Unbale for find Weather info for {city}. \r\n Please check the city name.");
+
+        }
+        else
+        {
+            await context.PostAsync($"Weather info for {weather.data.request.FindLast(x => true).query}. \r\n Temperatur is : {weather.data.current_condition.FindLast(p => true).temp_C}. \r\n Feels like :{weather.data.current_condition.FindLast(l => true).FeelsLikeC}");
+        }
+            //await context.PostAsync($"End");
          //
         context.Wait(MessageReceived);
     }
@@ -55,6 +63,7 @@ public class Weather
 {
     public List<Request> request;
     public List<Current_condition> current_condition;
+    public List<string> error;
 
 }
 public class Request
