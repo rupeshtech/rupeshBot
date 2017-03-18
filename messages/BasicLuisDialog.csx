@@ -104,7 +104,7 @@ public class BasicLuisDialog : LuisDialog<object>
                 }
                 else
                 {
-                    await context.PostAsync($"MaxMortgageAmount :{hypothekerInfo.MaxMortgageAmount}  \r\n MaxNewHouse :{hypothekerInfo.MaxNewHouse}  \r\n MaxExistingHouse :{hypothekerInfo.MaxExistingHouse}  \r\n MaxSpendingAmount :{hypothekerInfo.MaxSpendingAmount}  \r\n ");
+                    await context.PostAsync($"MaxMortgageAmount :{hypothekerInfo.MaxMortgageAmount}  \r\n MaxNewHouse :{hypothekerInfo.MaxNewHouse}  \r\n MaxExistingHouse :{hypothekerInfo.MaxExistingHouse}  \r\n MaxSpendingAmount :{hypothekerInfo.MaxSpendingAmount}  \r\n Interest rate is :{hypothekerInfo.Interest}");
                     await context.PostAsync($"Thanks");
                 }
             }
@@ -172,10 +172,11 @@ public class WeatherInfo
 public class  Mortgage
 {
     public int MaxMortgageAmount;
-    public int MaxNewHouse;
+    public decimal MaxNewHouse;
     public int MaxExistingHouse;
     public int MaxSpendingAmount;
     public bool HasErrorMessage;
+    public decimal Interest;
 }
 public class HypothekerInfo
 {
