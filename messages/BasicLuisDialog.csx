@@ -36,7 +36,7 @@ public class BasicLuisDialog : LuisDialog<object>
             greeting = entity.Entity;
         }
         if (greeting == null) greeting = "hello";
-        await context.PostAsync($"{greeting} .. How are you?"); //
+        await context.PostAsync($"{greeting}. My name is RupeshBot .. Please ask your question?"); //
         context.Wait(MessageReceived);
     }
     [LuisIntent("WeatherIntent")]
