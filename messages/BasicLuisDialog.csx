@@ -52,7 +52,7 @@ public class BasicLuisDialog : LuisDialog<object>
         }
         else
         {
-            await context.PostAsync($"Weather info for {weather.data.request.FindLast(x => true).query}. \r\n Temperatur is : {weather.data.current_condition.FindLast(p => true).temp_C}. \r\n Feels like :{weather.data.current_condition.FindLast(l => true).FeelsLikeC}");
+            await context.PostAsync($"Weather info for {weather.data.request.FindLast(x => true).query}. \r\n Temperatur is : {weather.data.current_condition.FindLast(p => true).temp_C} degree celsius. \r\n Feels like :{weather.data.current_condition.FindLast(l => true).FeelsLikeC} degree celsius");
         }
             //await context.PostAsync($"End");
          //
