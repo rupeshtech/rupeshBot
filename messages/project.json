@@ -2,7 +2,7 @@
   "frameworks": {
     "net46":{
       "dependencies": {
-        "Microsoft.Bot.Builder.Azure": "3.5.5",
+        "Microsoft.Bot.Builder.Azure": "3.2.1",
         "System.Net": "4.0.0",
         "System.Xml": "4.0.0",
         "System.Xml.Linq": "4.0.0"
