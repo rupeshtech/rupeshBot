@@ -40,7 +40,7 @@ public class BasicLuisDialog : LuisDialog<object>
         await context.PostAsync($"Y asked about weather.{result.Query}");
         foreach(var intent in intents)
         {
-         await context.PostAsync($"Intentt number is {i} .. value is {intent.Intent}"); 
+         await context.PostAsync($"Intenttion number is {i} .. value is {intent.Intent}"); 
          i++;
         }
         foreach(var entity in entities)
