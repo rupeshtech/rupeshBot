@@ -97,14 +97,14 @@ public class BasicLuisDialog : LuisDialog<object>
             if (!string.IsNullOrEmpty(annualSalary) && !string.IsNullOrEmpty(age))
             {
                 var hypothekerInfo = info.GetMortgageInfo(annualSalary, age);
-                if (hypothekerInfo == null)
+                if (hypothekerInfo == null|| hypothekerInfo.HasErrorMessage)
                 {
                     await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
 
                 }
                 else
                 {
-                    await context.PostAsync($"{hypothekerInfo}");
+                    await context.PostAsync($"MaxMortgageAmount :{hypothekerInfo.MaxMortgageAmount}  \r\n MaxNewHouse :{hypothekerInfo.MaxNewHouse}  \r\n MaxExistingHouse :{hypothekerInfo.MaxExistingHouse}  \r\n MaxSpendingAmount :{hypothekerInfo.MaxSpendingAmount}  \r\n ");
                     await context.PostAsync($"Thanks");
                 }
             }
@@ -169,14 +169,23 @@ public class WeatherInfo
         return weatherInfo; 
     }
 }
+public class  Mortgage
+{
+    public int MaxMortgageAmount;
+    public int MaxNewHouse;
+    public int MaxExistingHouse;
+    public int MaxSpendingAmount;
+    public bool HasErrorMessage;
+}
 public class HypothekerInfo
 {
-    public string GetMortgageInfo(string annualIncome, string age)
+    public Mortgage GetMortgageInfo(string annualIncome, string age)
     {
         WebClient client = new WebClient();
         client.Headers.Add("Content-Type", "application/json");
         string data = "{ApplicantYearlyIncome:" + annualIncome + ",ApplicantAge:" + age + "}";
         string hypothekerInfo = client.UploadString($"https://api.hypotheker.nl/Calculations/CalculateMaximumMortgageByIncome","POST",data);
-        return hypothekerInfo;
+        var mortgageInfo = JsonConvert.DeserializeObject<HypothekerInfo>(hypothekerInfo);
+        return mortgageInfo;
     }
 }
