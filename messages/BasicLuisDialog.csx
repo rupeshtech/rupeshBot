@@ -64,13 +64,32 @@ public class BasicLuisDialog : LuisDialog<object>
     {
         var entities = result.Entities;
         int j = 0;
-        string city = null;
+        string annualSalary = null;
+        string age = null;
         await context.PostAsync($"You asked.{result.Query}");
+        if(result.Query.ToLower().Contains("mortgages")|| result.Query.ToLower().Contains("loan")|| result.Query.ToLower().Contains("lenen"))
+        {
+            await context.PostAsync($"Please type: My Annual salary is ursalary euro and my age is urage. \r\n For ex: My Annual salary is 50000 euro and my age is 30 ");
+        }
         foreach (var entity in entities)
         {
             await context.PostAsync($"entity is : {j}. value is {entity.Entity}");
+            if(j==0)annualSalary = entity.Entity;
+            if (j == 1) age = entity.Entity;
+            j++;
         }
-       
+        var info = new HypothekerInfo();
+        var hypothekerInfo = info.GetMortgageInfo(annualSalary,age);
+        if (hypothekerInfo == null)
+        {
+            await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
+
+        }
+        else
+        {
+            await context.PostAsync($"{hypothekerInfo}");
+        }
+
         await context.PostAsync($"End");
         //
         context.Wait(MessageReceived);
@@ -119,5 +138,16 @@ public class WeatherInfo
         string response = client.DownloadString($"http://api.worldweatheronline.com/premium/v1/weather.ashx?q={city}&key=cce343f9e6bd4d159bc133122171803&format=json");
         var weatherInfo = JsonConvert.DeserializeObject<WeatherResponse>(response);
         return weatherInfo; 
+    }
+}
+public class HypothekerInfo
+{
+    public string GetMortgageInfo(string annualIncome, string age)
+    {
+        WebClient client = new WebClient();
+        client.Headers.Add("Content-Type", "application/json");
+        string data = "{ApplicantYearlyIncome:" + annualIncome + ",ApplicantAge:" + age + "}";
+        string hypothekerInfo = client.UploadString($"https://api.hypotheker.nl/Calculations/CalculateMaximumMortgageByIncome","POST",data);
+        return hypothekerInfo;
     }
 }
