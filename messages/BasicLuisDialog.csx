@@ -36,7 +36,7 @@ public class BasicLuisDialog : LuisDialog<object>
         await context.PostAsync($"Y asked about weather.{result.Query}");
         foreach(var entity in entities)
         {
-        city = entity.Entity
+        var city = entity.Entity
          await context.PostAsync($"entity number is {j} .. value is {city}"); 
          j++;   
         }
