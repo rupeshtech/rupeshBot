@@ -104,8 +104,9 @@ public class BasicLuisDialog : LuisDialog<object>
         }
         else
         {
-            if(int.TryParse(annualSalary, out annualSalaryInt) || int.TryParse(age, out ageInt))
+            if (int.TryParse(annualSalary, out annualSalaryInt) || int.TryParse(age, out ageInt))
                 await context.PostAsync($"Unbale for get mortgage amount: {result.Query}. \r\n Please make sure n annual salary and age are only numbers");
+        }
 
         //await context.PostAsync($"End");
         //
