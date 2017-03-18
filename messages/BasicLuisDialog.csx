@@ -58,6 +58,23 @@ public class BasicLuisDialog : LuisDialog<object>
          //
         context.Wait(MessageReceived);
     }
+
+    [LuisIntent("Hypotheker")]
+    public async Task Hypotheker(IDialogContext context, LuisResult result)
+    {
+        var entities = result.Entities;
+        int j = 0;
+        string city = null;
+        await context.PostAsync($"You asked.{result.Query}");
+        foreach (var entity in entities)
+        {
+            await context.PostAsync($"entity is : {j}. value is {entity.Entity}");
+        }
+       
+        await context.PostAsync($"End");
+        //
+        context.Wait(MessageReceived);
+    }
 }
 public class Weather
 {
