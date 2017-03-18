@@ -79,24 +79,33 @@ public class BasicLuisDialog : LuisDialog<object>
             j++;
         }
         var info = new HypothekerInfo();
-        if (!string.IsNullOrEmpty(annualSalary) && !string.IsNullOrEmpty(age))
+        int annualSalaryInt = 0;
+        int ageInt = 0;
+        if (int.TryParse(annualSalary, out annualSalaryInt) && int.TryParse(age, out ageInt))
         {
-            var hypothekerInfo = info.GetMortgageInfo(annualSalary, age);
-            if (hypothekerInfo == null)
+            if (!string.IsNullOrEmpty(annualSalary) && !string.IsNullOrEmpty(age))
             {
-                await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
+                var hypothekerInfo = info.GetMortgageInfo(annualSalary, age);
+                if (hypothekerInfo == null)
+                {
+                    await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
 
+                }
+                else
+                {
+                    await context.PostAsync($"{hypothekerInfo}");
+                    await context.PostAsync($"Thanks");
+                }
             }
             else
             {
-                await context.PostAsync($"{hypothekerInfo}");
-                await context.PostAsync($"Thanks");
-            } 
+                await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
+            }
         }
         else
         {
-            await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
-        }
+            if(int.TryParse(annualSalary, out annualSalaryInt) || int.TryParse(age, out ageInt))
+                await context.PostAsync($"Unbale for get mortgage amount: {result.Query}. \r\n Please make sure n annual salary and age are only numbers
 
         //await context.PostAsync($"End");
         //
