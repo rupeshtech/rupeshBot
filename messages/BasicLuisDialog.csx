@@ -41,8 +41,39 @@ public class BasicLuisDialog : LuisDialog<object>
          await context.PostAsync($"entity number is {j} .. value is {city}"); 
          j++;   
         }
+        var info = new WeatherInfo();
+        var weather = info.GetWeatherInfo("Amsterdam");
+        await context.PostAsync($"{weather.request.ToString()}");
         await context.PostAsync($"End");
          //
         context.Wait(MessageReceived);
+    }
+}
+public class Weather
+{
+    public Request request;
+    public Current_condition current_condition;
+
+}
+public class Request
+{
+    public string type;
+    public string query;
+}
+public class Current_condition
+{
+    public int temp_C;
+    public int temp_F;
+}
+public class WeatherInfo
+{
+    public Weather GetWeatherInfo(string city)
+    {
+        WebClient client = new WebClient();
+        string response = client.DownloadString($"http://api.worldweatheronline.com/premium/v1/weather.ashx?q={city}&key=cce343f9e6bd4d159bc133122171803");
+        XmlSerializer serializer = new XmlSerializer(typeof(Weather), new XmlRootAttribute("data"));
+        MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(response));
+        var weatherInfo = (Weather)serializer.Deserialize(memStream);
+        return weatherInfo;
     }
 }
