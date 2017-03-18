@@ -63,8 +63,12 @@ public class Weather
 {
     public List<Request> request;
     public List<Current_condition> current_condition;
-    public List<string> error;
+    public List<ErrorMessage> error;
 
+}
+public class ErrorMessage
+{
+    public string msg;
 }
 public class Request
 {
