@@ -73,7 +73,7 @@ public class BasicLuisDialog : LuisDialog<object>
         }
         foreach (var entity in entities)
         {
-            await context.PostAsync($"entity is : {j}. value is {entity.Entity}");
+            //await context.PostAsync($"entity is : {j}. value is {entity.Entity}");
             if(j==0)annualSalary = entity.Entity;
             if (j == 1) age = entity.Entity;
             j++;
@@ -90,10 +90,11 @@ public class BasicLuisDialog : LuisDialog<object>
             else
             {
                 await context.PostAsync($"{hypothekerInfo}");
+                await context.PostAsync($"Thanks");
             } 
         }
 
-        await context.PostAsync($"End");
+        //await context.PostAsync($"End");
         //
         context.Wait(MessageReceived);
     }
