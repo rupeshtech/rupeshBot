@@ -45,7 +45,7 @@ public class BasicLuisDialog : LuisDialog<object>
         }
         var info = new WeatherInfo();
         var weather = info.GetWeatherInfo("Amsterdam");
-        await context.PostAsync($"Weather infor for {weather.data.request.FindLast().query}. \r\n Temperatur is : {weather.data.current_condition.FindLast().temp_C}. \r\n Feels like :{weather.data.current_condition.FindLast().FeelsLikeC}");
+        await context.PostAsync($"Weather infor for {weather.data.request.FindLast(x=>true).query}. \r\n Temperatur is : {weather.data.current_condition.FindLast(p=>true).temp_C}. \r\n Feels like :{weather.data.current_condition.FindLast(l=>true).FeelsLikeC}");
         //await context.PostAsync($"End");
          //
         context.Wait(MessageReceived);
