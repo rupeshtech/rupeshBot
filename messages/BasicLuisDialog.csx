@@ -51,7 +51,7 @@ public class BasicLuisDialog : LuisDialog<object>
         var weather = info.GetWeatherInfo(city);
         if (weather.data.error != null)
         {
-            await context.PostAsync($"Unbale for find answer you question: {result.Query}.");
+            await context.PostAsync($"Unable for find answer you question: {result.Query}.");
 
         }
         else
@@ -105,13 +105,13 @@ public class BasicLuisDialog : LuisDialog<object>
             }
             else
             {
-                await context.PostAsync($"Unbale for find answer yrrou question: {result.Query}. \r\n Pleaseeeeeeeeeeee check annual salary and age.");
+                await context.PostAsync($"Unbale to answer your question: {result.Query}. \r\n Please check annual salary and age.");
             }
         }
         else
         {
             if (!int.TryParse(annualSalary, out annualSalaryInt) || !int.TryParse(age, out ageInt))
-                await context.PostAsync($"Unbale for get mortgage amount.\r\n Please make sure n annual salary and age are only numbers");
+                await context.PostAsync($"Sorry. Unable to answer your question: {result.Query}. \r\n Please check you question.");
         }
 
         //await context.PostAsync($"End");
