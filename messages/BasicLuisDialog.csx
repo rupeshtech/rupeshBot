@@ -67,7 +67,7 @@ public class BasicLuisDialog : LuisDialog<object>
         string annualSalary = null;
         string age = null;
         await context.PostAsync($"You asked.{result.Query}");
-        if(result.Query.ToLower().Contains("mortgages")|| result.Query.ToLower().Contains("loan")|| result.Query.ToLower().Contains("lenen"))
+        if(result.Query.ToLower().Contains("mortgage")|| result.Query.ToLower().Contains("loan")|| result.Query.ToLower().Contains("lenen"))
         {
             await context.PostAsync($"Please type: My Annual salary is ursalary euro and my age is urage. \r\n For ex: My Annual salary is 50000 euro and my age is 30 ");
         }
