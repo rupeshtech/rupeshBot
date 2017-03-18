@@ -46,7 +46,7 @@ public class BasicLuisDialog : LuisDialog<object>
         }
         var info = new WeatherInfo();
         var weather = info.GetWeatherInfo("Amsterdam");
-        await context.PostAsync($"{weather.request.ToString}");
+        await context.PostAsync($"{weather}");
         await context.PostAsync($"End");
          //
         context.Wait(MessageReceived);
@@ -74,11 +74,11 @@ public class WeatherResponse
 }
 public class WeatherInfo
 {
-    public WeatherResponse GetWeatherInfo(string city)
+    public string GetWeatherInfo(string city)
     {
         WebClient client = new WebClient();
         string response = client.DownloadString($"http://api.worldweatheronline.com/premium/v1/weather.ashx?q={city}&key=cce343f9e6bd4d159bc133122171803&format=json");
         var weatherInfo = JsonConvert.DeserializeObject<WeatherResponse>(response);
-        return weatherInfo;
+        return JsonConvert.SerializeObject(weatherInfo); ;
     }
 }
