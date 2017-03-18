@@ -94,7 +94,7 @@ public class BasicLuisDialog : LuisDialog<object>
                 var hypothekerInfo = info.GetMortgageInfo(annualSalary, age);
                 if (hypothekerInfo == null|| hypothekerInfo.HasErrorMessage)
                 {
-                    await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check you question.");
+                    await context.PostAsync($"Sorry. Unable to answer your question: {result.Query}. \r\n Please check you question.");
 
                 }
                 else
@@ -105,7 +105,7 @@ public class BasicLuisDialog : LuisDialog<object>
             }
             else
             {
-                await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
+                await context.PostAsync($"Unbale for find answer yrrou question: {result.Query}. \r\n Pleaseeeeeeeeeeee check annual salary and age.");
             }
         }
         else
