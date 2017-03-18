@@ -29,7 +29,14 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("Greetings")]
     public async Task MyIntent(IDialogContext context, LuisResult result)
     {
-        await context.PostAsync($"Hello Sir .. How are you?"); //
+        var entities = result.Entities;
+        string greeting = null;
+        foreach (var entity in entities)
+        {
+            greeting = entity.Entity;
+        }
+        if (greeting == null) greeting = "hello";
+        await context.PostAsync($"{greeting} .. How are you?"); //
         context.Wait(MessageReceived);
     }
     [LuisIntent("WeatherIntent")]
