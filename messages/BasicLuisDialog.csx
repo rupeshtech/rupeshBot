@@ -79,15 +79,18 @@ public class BasicLuisDialog : LuisDialog<object>
             j++;
         }
         var info = new HypothekerInfo();
-        var hypothekerInfo = info.GetMortgageInfo(annualSalary,age);
-        if (hypothekerInfo == null)
+        if (!string.IsNullOrEmpty(annualSalary) && !string.IsNullOrEmpty(age))
         {
-            await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
+            var hypothekerInfo = info.GetMortgageInfo(annualSalary, age);
+            if (hypothekerInfo == null)
+            {
+                await context.PostAsync($"Unbale for find answer you question: {result.Query}. \r\n Please check annual salary and age.");
 
-        }
-        else
-        {
-            await context.PostAsync($"{hypothekerInfo}");
+            }
+            else
+            {
+                await context.PostAsync($"{hypothekerInfo}");
+            } 
         }
 
         await context.PostAsync($"End");
