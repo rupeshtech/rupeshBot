@@ -185,7 +185,7 @@ public class HypothekerInfo
         client.Headers.Add("Content-Type", "application/json");
         string data = "{ApplicantYearlyIncome:" + annualIncome + ",ApplicantAge:" + age + "}";
         string hypothekerInfo = client.UploadString($"https://api.hypotheker.nl/Calculations/CalculateMaximumMortgageByIncome","POST",data);
-        var mortgageInfo = JsonConvert.DeserializeObject<HypothekerInfo>(hypothekerInfo);
+        var mortgageInfo = JsonConvert.DeserializeObject<Mortgage>(hypothekerInfo);
         return mortgageInfo;
     }
 }
