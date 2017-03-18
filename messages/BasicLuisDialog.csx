@@ -38,8 +38,8 @@ public class BasicLuisDialog : LuisDialog<object>
         if (greeting == null) greeting = "hello";
         await context.PostAsync($"{greeting}. My name is RupeshBot .. Please ask your question.");
         await context.PostAsync($"Currently I am replying for following two questions.");
-        await context.PostAsync($"1) what is the weather in any city \r\n 2) How much can I mortgage?");
-        await context.PostAsync($"I am born few days agao.I am still learning English.");
+        await context.PostAsync($"1) what is the weather in \"City Name\"? \r\n 2) How much can I mortgage?");
+        await context.PostAsync($"Since I am newly born.I am still learning English.:)");
         context.Wait(MessageReceived);
     }
     [LuisIntent("WeatherIntent")]
