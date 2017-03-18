@@ -32,20 +32,12 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("WeatherIntent")]
     public async Task WeatherIntent(IDialogContext context, LuisResult result)
     {
-        var intents = result.Intents;
         var entities = result.Entities;
-        var dialog = result.Dialog;
-        int i=0;
-        int j=0;
         await context.PostAsync($"Y asked about weather.{result.Query}");
-        foreach(var intent in intents)
-        {
-         await context.PostAsync($"Intenttion number is {i} .. value is {intent.Intent}"); 
-         i++;
-        }
         foreach(var entity in entities)
         {
-         await context.PostAsync($"entity number is {j} .. value is {entity.Entity}"); 
+        city = entity.Entity
+         await context.PostAsync($"entity number is {j} .. value is {city}"); 
          j++;   
         }
         await context.PostAsync($"End");
