@@ -57,7 +57,7 @@ public class BasicLuisDialog : LuisDialog<object>
         else
         {
             await context.PostAsync($"Weather info for {weather.data.request.FindLast(x => true).query}. \r\n Temperatur is : {weather.data.current_condition.FindLast(p => true).temp_C} degree celsius. \r\n Feels like :{weather.data.current_condition.FindLast(l => true).FeelsLikeC} degree celsius");
-            await context.PostAsync($"Have you found your answer? You can ask another question. I will be happy to help you!");
+            await context.PostAsync($"Have you found your answer? You can ask me also. How much can I take loan?");
         }
             //await context.PostAsync($"End");
          //
@@ -100,7 +100,7 @@ public class BasicLuisDialog : LuisDialog<object>
                 else
                 {
                     await context.PostAsync($"MaxMortgageAmount :{hypothekerInfo.MaxMortgageAmount}  \r\n MaxNewHouse :{hypothekerInfo.MaxNewHouse}  \r\n MaxExistingHouse :{hypothekerInfo.MaxExistingHouse}  \r\n MaxSpendingAmount :{hypothekerInfo.MaxSpendingAmount}  \r\n Interest rate is :{hypothekerInfo.Interest}");
-                    await context.PostAsync($"Have you found your answer? You can ask another question. I will be happy to help you!");
+                    await context.PostAsync($"Have you found your answer? What is the weather in London?");
                 }
             }
             else
